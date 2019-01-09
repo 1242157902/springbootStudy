@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="requestLog" fileName="./logs/requestLog/request.log"
+                     filePattern="I:/logs/requestLog/request-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="1000"/>
+        </RollingFile>
+        <RollingFile name="responseLog" fileName="./logs/responseLog/response.log"
+                     filePattern="./logs/responseLog/response-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="1000"/>
+        </RollingFile>
+        <RollingFile name="consumerLog" fileName="./logs/kafkaConsumerLog/kafkaConsumer.log"
+                     filePattern="./logs/kafkaConsumerLog/kafkaConsumer-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="1 GB" />
+            </Policies>
+            <DefaultRolloverStrategy max="1000"/>
+        </RollingFile>
+        <RollingFile name="errorLog" fileName="./logs/errorLog/error.log"
+                     filePattern="./logs/errorLog/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="1000"/>
+        </RollingFile>
+
+    </appenders>
+
+    <loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <logger name="RequestLog" level="info" additivity="false">
+            <appender-ref ref="requestLog"/>
+        </logger>
+        <logger name="ResponseLog" level="info" additivity="false">
+            <appender-ref ref="responseLog"/>
+        </logger>
+        <logger name="ConsumerLog" level="info" additivity="false">
+            <appender-ref ref="consumerLog"/>
+        </logger>
+        <logger name="ErrorLog" level="info" additivity="false">
+            <appender-ref ref="errorLog"/>
+        </logger>
+    </loggers>
+
+</configuration>
